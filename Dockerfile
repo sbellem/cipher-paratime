@@ -16,6 +16,10 @@ RUN apt-get update && apt-get install --yes \
                 protobuf-compiler \
         && rm -rf /var/lib/apt/lists/*
 
+WORKDIR /usr/src/cipher-paratime
+
+COPY rust-toolchain ./
+
 RUN rustup component add rustfmt \
         && cargo install cargo-audit
 
@@ -29,8 +33,7 @@ RUN cargo install oasis-core-tools \
         --force \
         --locked
 
-WORKDIR /usr/src/cipher-paratime
-COPY Cargo.lock Cargo.toml .rustfmt.toml rust-toolchain ./
+COPY Cargo.lock Cargo.toml .rustfmt.toml ./
 COPY .cargo .cargo
 COPY src src
 
