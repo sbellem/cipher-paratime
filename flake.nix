@@ -2,7 +2,7 @@
   description = "A devShell example";
 
   inputs = {
-    nixpkgs.url      = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url      = "github:nixos/nixpkgs/9a3cfff2f9035ca0bd54ff13b608c4492eca6be3";
     rust-overlay.url = "github:oxalica/rust-overlay";
     flake-utils.url  = "github:numtide/flake-utils";
   };
