@@ -16,6 +16,8 @@ debug = false
 oasis-runtime-sdk = { git = "https://github.com/oasisprotocol/oasis-sdk", branch = "main" }
 module-contracts = { git = "https://github.com/oasisprotocol/oasis-sdk", branch = "main", package = "oasis-runtime-sdk-contracts" }
 
-oasis-core-tools = {git = "https://github.com/oasisprotocol/oasis-core", branch = "main" }
+# for elf2sgxs
+[target.x86_64-fortanix-unknown-sgx.dependencies]
 fortanix-sgx-tools = "0.4.0"
 sgxs-tools = "0.8.2"
+oasis-core-tools = { git = "https://github.com/oasisprotocol/oasis-core", branch = "master" }

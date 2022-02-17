@@ -23,19 +23,20 @@ COPY rust-toolchain ./
 RUN rustup component add rustfmt \
         && cargo install cargo-audit
 
-RUN rustup target add x86_64-fortanix-unknown-sgx \
-        && cargo install --version 0.4.0 fortanix-sgx-tools \
-        && cargo install --version 0.8.2 sgxs-tools
-
-# needed for elf2sgxs
-RUN cargo install oasis-core-tools \
-        --git https://github.com/oasisprotocol/oasis-core \
-        --force \
-        --locked
+RUN rustup target add x86_64-fortanix-unknown-sgx
+#RUN rustup target add x86_64-fortanix-unknown-sgx \
+#        && cargo install --version 0.4.0 fortanix-sgx-tools \
+#        && cargo install --version 0.8.2 sgxs-tools
+#
+## needed for elf2sgxs
+#RUN cargo install oasis-core-tools \
+#        --git https://github.com/oasisprotocol/oasis-core \
+#        --force \
+#        --locked
 
 COPY Cargo.lock Cargo.toml .rustfmt.toml ./
 COPY .cargo .cargo
 COPY src src
 
 RUN cargo build --release --target x86_64-fortanix-unknown-sgx
-RUN cargo elf2sgxs --release
+#RUN cargo elf2sgxs --release
