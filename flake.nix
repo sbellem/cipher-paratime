@@ -90,7 +90,6 @@
 
               mkdir -p $out/bin
               cp target/x86_64-fortanix-unknown-sgx/release/cipher-paratime.sgxs $out/bin/
-              cp target/x86_64-fortanix-unknown-sgx/release/cipher-paratime $out/bin/
 
               runHook postInstall
             '';
