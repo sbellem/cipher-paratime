@@ -27,14 +27,14 @@
         };
 
         pname = "cipher-paratime";
-        version = "2.0.0-alpha3";
+        version = "2.0.1-alpha1";
 
         src = builtins.path {
           path = ./.;
           name = "${pname}-${version}";
         };
 
-        cargoSha256 = "sha256-a6tMY2NLeIcMeU2bw9qCtgxD8odlpajzl9N28yZ9n38=";
+        cargoSha256 = "sha256-r3GpzZ/G+yLxJFcAFjIfFv6sENxlIVf5UQz/AXJ8y8Y=";
 
         LIBCLANG_PATH = "${pkgs.llvmPackages_11.libclang.lib}/lib";
         rust_toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain;
@@ -47,7 +47,7 @@
         ];
       in
         with pkgs; {
-          packages.non-sgx = rustPlatform.buildRustPackage rec {
+          packages.nosgx = rustPlatform.buildRustPackage rec {
             inherit pname version src cargoSha256 LIBCLANG_PATH rust_toolchain _nativeBuildInputs;
 
             nativeBuildInputs = _nativeBuildInputs ++ [rust_toolchain];
@@ -87,7 +87,7 @@
             '';
           };
 
-          defaultPackage = self.packages.${system}.non-sgx;
+          defaultPackage = self.packages.${system}.nosgx;
 
           devShell = mkShell {
             inherit LIBCLANG_PATH rust_toolchain _nativeBuildInputs;
