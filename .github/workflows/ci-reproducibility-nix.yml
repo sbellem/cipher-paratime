@@ -28,6 +28,7 @@ jobs:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/9a3cfff2f9035ca0bd54ff13b608c4492eca6be3.tar.gz
       - run: nix --version
       - run: nix build .#nosgx
+      - run: nix build --rebuild .#nosgx
       - run: shasum -a 512256 -b result/bin/cipher-paratime
       - run: sha256sum result/bin/cipher-paratime
 
@@ -52,6 +53,7 @@ jobs:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/9a3cfff2f9035ca0bd54ff13b608c4492eca6be3.tar.gz
       - run: nix --version
       - run: nix build .#sgx
+      - run: nix build --rebuild .#sgx
       - run: shasum -a 512256 -b result/bin/cipher-paratime.sgxs
       - run: sha256sum result/bin/cipher-paratime
 
@@ -59,5 +61,5 @@ jobs:
         run: |
           # FIXME shasum of local build does not match the one on github ci
           #       perhaps some dependencies are not pinned
-          #echo "547c506aee7c7ee53e85ce0842e840010979288c8350a0b9dc1d510d8b431abf *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
-          echo "fbd36bb70d0e381866a3aa0da5e52304c16dc022b86e44302b18e104aecc2743 *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+          #echo "547c506aee7c7ee53e85ce0842e840010979288c8350a0b9dc1d510d8b431abf *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
+          echo "fbd36bb70d0e381866a3aa0da5e52304c16dc022b86e44302b18e104aecc2743 *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
