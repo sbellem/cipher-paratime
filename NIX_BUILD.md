@@ -1,10 +1,46 @@
 # Reproducbile Builds with Nix
 
-**NOTE**: This is **Work in Progress**
+To build ciper-paratime without sgx support:
 
-The build process is not fully automated yet, and must be done in a shell.
+```console
+nix build
+```
 
-Start the shell like so:
+or
+
+```console
+nix build .#nosgx
+```
+
+The binary `cipher-paratime` should be under `result/bin/`.
+
+To build cipher-paratime with sgx support:
+
+```console
+nix build .#sgx
+```
+
+The binary `cipher-paratime.sgxs` should be under `result/bin/`.
+
+Check the hash ...
+
+SHA256:
+```console
+sha256sum result/bin/cipher-paratime.sgxs
+```
+```console
+f7ff2296f5182cb287a30cab7c41a8a2ab75e72847300b9131f1507e37826322  result/bin/cipher-paratime.sgxs
+```
+
+BLAKE2:
+```console
+b2sum result/bin/cipher-paratime.sgxs
+```
+```console
+09328d5f870ad3332307aff2eac5a23f767c6c2ff8fa98fc05754c410bcf6d1f4561ddf471d5cbe7a7ca957853c3b9f9c8d1063f71aa1f228fb5076d9be8e599  result/bin/cipher-paratime.sgxs
+```
+
+It's also possible to start a development shell with:
 
 ```console
 nix develop --ignore-environment
@@ -19,29 +55,13 @@ cargo build --release --target x86_64-fortanix-unknown-sgx
 Convert an the `x86_64-fortanix-unknown-sgx` ELF binary to `SGXS`:
 
 ```console
-# TODO put this in flake.nix or figure out what's the best way ...
-export PATH=$PATH:~/.cargo/bin
-
 cargo elf2sgxs --release
 ```
 
-Check the hash ...
+The output will be under `target/x86_64-fortanix-unknown-sgx/release`.
 
-BLAKE2:
-
-```console
-b2sum target/x86_64-fortanix-unknown-sgx/release/cipher-paratime.sgxs
-```
-```console
-5f10b2063d5621f66188651059b0ffdcc8501dead9da740c51684d3737acec310e23b5d2aa1f2c52bdd3e40e5222120f216a43fa6c09c7c186ec775e29c1731c  target/x86_64-fortanix-unknown-sgx/release/cipher-paratime.sgxs
-```
-
-SHA256:
+## Building without local repository
 
 ```console
-sha256sum target/x86_64-fortanix-unknown-sgx/release/cipher-paratime.sgxs
-```
-
-```console
-022fae249bdc551122efd148868fd5c38bdaaf3f82aca697853c59681f48d446  target/x86_64-fortanix-unknown-sgx/release/cipher-paratime.sgxs
+nix build github:sbellem/cipher-paratime/nix-flake-2.0.1-alpha1#sgx
 ```
