@@ -40,6 +40,12 @@ b2sum result/bin/cipher-paratime.sgxs
 09328d5f870ad3332307aff2eac5a23f767c6c2ff8fa98fc05754c410bcf6d1f4561ddf471d5cbe7a7ca957853c3b9f9c8d1063f71aa1f228fb5076d9be8e599  result/bin/cipher-paratime.sgxs
 ```
 
+To build both `cipher-paratime` (without sgx support) and `cipher-paratime.sgxs`:
+
+```console
+nix build .#sgx .#nosgx
+```
+
 It's also possible to start a development shell with:
 
 ```console
