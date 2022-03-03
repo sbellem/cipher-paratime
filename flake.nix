@@ -13,7 +13,7 @@
       url = "github:initc3/nix-fortanix?dir=sgxs-tools";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    oasis-core-tools= {
+    oasis-core-tools = {
       url = "github:sbellem/oasis-core/142c5daf74fecc5533fc50589b06b3117a509cb0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -28,7 +28,7 @@
     oasis-core-tools,
     sgxs-tools,
   }:
-    flake-utils.lib.eachDefaultSystem (
+    flake-utils.lib.eachSystem ["x86_64-linux"] (
       system: let
         overlays = [(import rust-overlay)];
         pkgs = import nixpkgs {
