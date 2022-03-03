@@ -2,20 +2,30 @@
   description = "A devShell example";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     fortanix-sgx-tools = {
       url = "github:initc3/nix-fortanix?dir=fortanix-sgx-tools";
+      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
     sgxs-tools = {
       url = "github:initc3/nix-fortanix?dir=sgxs-tools";
+      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
     oasis-core-tools = {
       url = "github:sbellem/oasis-core/142c5daf74fecc5533fc50589b06b3117a509cb0";
+      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
   };
 
