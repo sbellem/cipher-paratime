@@ -58,7 +58,7 @@ jobs:
       - run: nix build .#sgx
       - run: nix build --rebuild .#sgx
       - run: shasum -a 512256 -b result/bin/cipher-paratime.sgxs
-      - run: sha256sum result/bin/cipher-paratime
+      - run: sha256sum result/bin/cipher-paratime.sgxs
 
       - name: Shasum check
         run: |
