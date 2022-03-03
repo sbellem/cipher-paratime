@@ -41,6 +41,7 @@ jobs:
       - run: nix flake check
       - run: nix flake metadata
       - run: nix flake show
+      - run: ls -l result
 
   check-reproducible-build-sgx:
     # NOTE: This name appears in GitHub's Checks API.
@@ -69,3 +70,4 @@ jobs:
       - run: nix flake check
       - run: nix flake metadata
       - run: nix flake show
+      - run: ls -l result
