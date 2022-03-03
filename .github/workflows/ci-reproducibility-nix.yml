@@ -27,7 +27,7 @@ jobs:
         with:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/9a3cfff2f9035ca0bd54ff13b608c4492eca6be3.tar.gz
       - run: nix --version
-      - run: nix build --no-update-lock-file .#nosgx
+      - run: nix build .#nosgx
       - run: nix build --rebuild .#nosgx
       - run: shasum -a 512256 -b result/bin/cipher-paratime
       - run: sha256sum result/bin/cipher-paratime
@@ -55,7 +55,7 @@ jobs:
         with:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/9a3cfff2f9035ca0bd54ff13b608c4492eca6be3.tar.gz
       - run: nix --version
-      - run: nix build --no-update-lock-file .#sgx
+      - run: nix build .#sgx
       - run: nix build --rebuild .#sgx
       - run: shasum -a 512256 -b result/bin/cipher-paratime.sgxs
       - run: sha256sum result/bin/cipher-paratime
