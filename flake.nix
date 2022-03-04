@@ -1,5 +1,5 @@
 {
-  description = "A devShell example";
+  description = "Oasis Network Cipher ParaTime";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -10,19 +10,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     fortanix-sgx-tools = {
-      url = "github:initc3/nix-fortanix?dir=fortanix-sgx-tools";
+      url = "github:sbellem/fortanix-sgx-tools";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
     sgxs-tools = {
-      url = "github:initc3/nix-fortanix?dir=sgxs-tools";
+      url = "github:sbellem/sgxs-tools";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
     oasis-core-tools = {
-      url = "github:sbellem/oasis-core/142c5daf74fecc5533fc50589b06b3117a509cb0";
+      url = "github:sbellem/oasis-core/nix";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
