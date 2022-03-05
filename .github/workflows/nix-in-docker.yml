@@ -1,0 +1,109 @@
+# NOTE: This name appears in GitHub's Checks API and in workflow's status badge.
+name: nix-in-docker
+
+# Trigger the workflow when:
+on:
+  push:
+    branches:
+      - main
+      - stable/*
+      - nix*
+  pull_request:
+    branches: [ main, nix ]
+
+  # Besides pushes on the branches above, also check every day at 00:00 UTC.
+  schedule:
+    - cron: "0 0 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  check-reproducible-build:
+    # NOTE: This name appears in GitHub's Checks API.
+    name: nix-in-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set Short SHA
+        id: vars
+        run: echo "::set-output name=short_sha::$(git rev-parse --short HEAD)"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build docker image for HoneyBadgerSwap
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          tags: |
+            cipher-paratime,
+            cipher-paratime-${{ steps.vars.outputs.short_sha }}
+      - run: |
+          docker run --rm -it -v $PWD:/src -w /src \
+            cipher-paratime-${{ steps.vars.outputs.short_sha }} nix build
+
+      - run: shasum -a 512256 -b result/bin/cipher-paratime
+      - run: sha256sum result/bin/cipher-paratime
+
+      - name: Shasum check
+        run: |
+          #echo "d4c77a86e0d1502313d70095f3badcd5a1499510f8131b0665dd2a93dbfd00b2 *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+          echo "b0c2e27d8b09e3d0337e65c3bac04f33b68afa16a09ccd3189cf039f222db7de *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+
+      - name: nix flake check, metadata, show
+        run: |
+          docker run --rm -it -v $PWD:/src -w /src \
+            cipher-paratime-${{ steps.vars.outputs.short_sha }} \
+              nix flake check \
+              nix flake metadata \
+              nix flake show
+
+      - name: /nix/store/... derivation
+        run: ls -l result
+
+  check-reproducible-build-sgx:
+    # NOTE: This name appears in GitHub's Checks API.
+    name: sgx-with-nix-in-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set Short SHA
+        id: vars
+        run: echo "::set-output name=short_sha::$(git rev-parse --short HEAD)"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build docker image for HoneyBadgerSwap
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          tags: |
+            cipher-paratime-sgx,
+            cipher-paratime-sgx-${{ steps.vars.outputs.short_sha }}
+      - run: |
+          docker run --rm -it -v $PWD:/src -w /src \
+            cipher-paratime-sgx-${{ steps.vars.outputs.short_sha }} nix build .#sgx
+
+      - run: shasum -a 512256 -b result/bin/cipher-paratime.sgxs
+      - run: sha256sum result/bin/cipher-paratime.sgxs
+
+      - name: Shasum check
+        run: |
+          #echo "547c506aee7c7ee53e85ce0842e840010979288c8350a0b9dc1d510d8b431abf *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
+          echo "fbd36bb70d0e381866a3aa0da5e52304c16dc022b86e44302b18e104aecc2743 *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
+
+      - name: nix flake check, metadata, show
+        run: |
+          docker run --rm -it -v $PWD:/src -w /src \
+            cipher-paratime-sgx-${{ steps.vars.outputs.short_sha }} \
+              nix flake check \
+              nix flake metadata \
+              nix flake show
+
+      - name: /nix/store/... derivation
+        run: ls -l result
