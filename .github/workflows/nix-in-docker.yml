@@ -41,8 +41,8 @@ jobs:
             cipher-paratime,
             cipher-paratime-${{ steps.vars.outputs.short_sha }}
       - run: |
-          docker run --rm -i -v $PWD:/src -w /src \
-            cipher-paratime-${{ steps.vars.outputs.short_sha }} nix build
+          docker run --rm -i -v $PWD:/src -w /src cipher-paratime nix build
+          #cipher-paratime-${{ steps.vars.outputs.short_sha }} nix build
 
       - run: shasum -a 512256 -b result/bin/cipher-paratime
       - run: sha256sum result/bin/cipher-paratime
@@ -86,8 +86,8 @@ jobs:
             cipher-paratime-sgx,
             cipher-paratime-sgx-${{ steps.vars.outputs.short_sha }}
       - run: |
-          docker run --rm -it -v $PWD:/src -w /src \
-            cipher-paratime-sgx-${{ steps.vars.outputs.short_sha }} nix build .#sgx
+          docker run --rm -it -v $PWD:/src -w /src cipher-paratime-sgx nix build .#sgx
+          #cipher-paratime-sgx-${{ steps.vars.outputs.short_sha }} nix build .#sgx
 
       - run: shasum -a 512256 -b result/bin/cipher-paratime.sgxs
       - run: sha256sum result/bin/cipher-paratime.sgxs
