@@ -41,7 +41,7 @@ jobs:
             cipher-paratime,
             cipher-paratime-${{ steps.vars.outputs.short_sha }}
       - run: |
-          docker run --rm -it -v $PWD:/src -w /src \
+          docker run --rm -i -v $PWD:/src -w /src \
             cipher-paratime-${{ steps.vars.outputs.short_sha }} nix build
 
       - run: shasum -a 512256 -b result/bin/cipher-paratime
@@ -54,7 +54,7 @@ jobs:
 
       - name: nix flake check, metadata, show
         run: |
-          docker run --rm -it -v $PWD:/src -w /src \
+          docker run --rm -i -v $PWD:/src -w /src \
             cipher-paratime-${{ steps.vars.outputs.short_sha }} \
               nix flake check \
               nix flake metadata \
