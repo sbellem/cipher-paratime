@@ -39,6 +39,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           tags: cipher-paratime:latest
           #cipher-paratime-${{ steps.vars.outputs.short_sha }}
+          load: true
       - run: |
           docker run --rm -i -v $PWD:/src -w /src cipher-paratime nix build
           #cipher-paratime-${{ steps.vars.outputs.short_sha }} nix build
@@ -83,6 +84,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           tags: cipher-paratime-sgx:latest
           #cipher-paratime-sgx-${{ steps.vars.outputs.short_sha }}
+          load: true
       - run: |
           docker run --rm -it -v $PWD:/src -w /src cipher-paratime-sgx nix build .#sgx
           #cipher-paratime-sgx-${{ steps.vars.outputs.short_sha }} nix build .#sgx
