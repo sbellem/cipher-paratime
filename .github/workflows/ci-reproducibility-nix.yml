@@ -71,3 +71,6 @@ jobs:
       - run: nix flake metadata
       - run: nix flake show
       - run: ls -l result
+      - run: |
+          openssl genrsa -3 3072 > private.pem
+          nix develop --command sgxs-sign result/bin/cipher-paratime.sgxs cipher-paratime.sig --key private.pem
