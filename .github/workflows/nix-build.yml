@@ -1,5 +1,5 @@
 # NOTE: This name appears in GitHub's Checks API and in workflow's status badge.
-name: ci-reproducibility-nix
+name: nix-build
 
 # Trigger the workflow when:
 on:
