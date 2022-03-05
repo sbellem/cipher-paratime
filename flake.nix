@@ -83,6 +83,23 @@
                 })
               ];
 
+            # TODO: Make sure it's ok to drop "-isystem/usr/include/x86_64-linux-gnu"
+            #
+            # See nixpkgs manual sect 6.8
+            #
+            # 6.8. Purity in Nixpkgs
+            # Measures taken to prevent dependencies on packages outside the
+            # store, and what you can do to prevent them.
+            #
+            # GCC doesn’t search in locations such as /usr/include. In fact,
+            # attempts to add such directories through the -I flag are
+            # filtered out. Likewise, the linker (from GNU binutils) doesn’t
+            # search in standard locations such as /usr/lib. Programs built on
+            # Linux are linked against a GNU C Library that likewise doesn’t
+            # search in the default system locations.
+            CFLAGS_X86_64_FORTANIX_UNKNOWN_SGX = "-mlvi-hardening -mllvm -x86-experimental-lvi-inline-asm-hardening";
+            CC_X86_64_FORTANIX_UNKNOWN_SGX = clang_11;
+
             buildPhase = ''
               runHook preBuild
 
