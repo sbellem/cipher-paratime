@@ -30,7 +30,12 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - run: |
-          docker run --rm -v $PWD:/src -w /src nixpkgs/nix-flakes /bin/bash -c "nix build .#nosgx && sha256sum result/bin/cipher-paratime && cp result/bin/cipher-paratime ."
+          docker run --rm -v $PWD:/src -w /src nixpkgs/nix-flakes /bin/bash <<-'EOF'
+            nix build .#nosgx
+            sha256sum result/bin/cipher-paratime
+            cp result/bin/cipher-paratime .
+            sha256sum cipher-paratime
+          EOF
 
       - run: shasum -a 512256 -b cipher-paratime
       - run: sha256sum cipher-paratime
