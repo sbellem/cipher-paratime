@@ -28,38 +28,14 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      #- name: Build docker image for nix-in-docker
-      #  uses: docker/build-push-action@v2
-      #  with:
-      #    context: .
-      #    file: Dockerfile
-      #    builder: ${{ steps.buildx.outputs.name }}
-      #    tags: cipher-paratime:latest
-      #    #cipher-paratime-${{ steps.vars.outputs.short_sha }}
-      #    load: true
+
       - run: |
-          docker run --rm -v $PWD:/src -w /src nixpkgs/nix-flakes /bin/bash -c "nix build .#nosgx && cp result/bin/cipher-paratime ."
+          docker run --rm -v $PWD:/src -w /src nixpkgs/nix-flakes /bin/bash -c "nix build .#nosgx && sha256sum result/bin/cipher-paratime && cp result/bin/cipher-paratime ."
 
       - run: shasum -a 512256 -b cipher-paratime
       - run: sha256sum cipher-paratime
 
-      #- name: Shasum check
-      #  run: |
-      #    #echo "d4c77a86e0d1502313d70095f3badcd5a1499510f8131b0665dd2a93dbfd00b2 *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
-      #    echo "1b2b457fb83b216353d2555a10d5a698d26b4aacb97843c4863a48d26f3e1f2b *cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
-
       - name: Sha256sum check
         run: |
-          #echo "d4c77a86e0d1502313d70095f3badcd5a1499510f8131b0665dd2a93dbfd00b2 *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
-          echo "6e7f332b7726db2d721467fa5743cda30168602b8075a539821701b085d8fb42 *cipher-paratime" | sha256sum --strict --check
-
-      - name: nix flake check, metadata, show
-        run: |
-          docker run --rm -i -v $PWD:/src -w /src \
-            cipher-paratime-${{ steps.vars.outputs.short_sha }} \
-              nix flake check \
-              nix flake metadata \
-              nix flake show
-
-      - name: /nix/store/... derivation
-        run: ls -l result
+          #echo "6e7f332b7726db2d721467fa5743cda30168602b8075a539821701b085d8fb42 *cipher-paratime" | sha256sum --strict --check
+          echo "890201e036a5edf1e75c184752e8f17b096ec83bba11aa30257b52cf726688dd *cipher-paratime" | sha256sum --strict --check
