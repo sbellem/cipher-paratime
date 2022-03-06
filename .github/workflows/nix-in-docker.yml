@@ -43,10 +43,15 @@ jobs:
       - run: shasum -a 512256 -b cipher-paratime
       - run: sha256sum cipher-paratime
 
-      - name: Shasum check
+      #- name: Shasum check
+      #  run: |
+      #    #echo "d4c77a86e0d1502313d70095f3badcd5a1499510f8131b0665dd2a93dbfd00b2 *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+      #    echo "1b2b457fb83b216353d2555a10d5a698d26b4aacb97843c4863a48d26f3e1f2b *cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+
+      - name: Sha256sum check
         run: |
           #echo "d4c77a86e0d1502313d70095f3badcd5a1499510f8131b0665dd2a93dbfd00b2 *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
-          echo "1b2b457fb83b216353d2555a10d5a698d26b4aacb97843c4863a48d26f3e1f2b *cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+          echo "6e7f332b7726db2d721467fa5743cda30168602b8075a539821701b085d8fb42 *cipher-paratime" | sha256sum --strict --check
 
       - name: nix flake check, metadata, show
         run: |
