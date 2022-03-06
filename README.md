@@ -2,6 +2,7 @@
 
 [![CI lint status][github-ci-lint-badge]][github-ci-lint-link]
 [![CI audit status][github-ci-audit-badge]][github-ci-audit-link]
+[![nix-build](https://github.com/sbellem/cipher-paratime/actions/workflows/nix-build.yml/badge.svg)](https://github.com/sbellem/cipher-paratime/actions/workflows/nix-build.yml)
 
 <!-- markdownlint-disable line-length -->
 [github-ci-lint-badge]: https://github.com/oasisprotocol/cipher-paratime/workflows/ci-lint/badge.svg
