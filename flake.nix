@@ -116,7 +116,7 @@
               runHook preInstall
 
               mkdir -p $out/bin
-              cp target/x86_64-fortanix-unknown-sgx/release/cipher-paratime.sgxs $out/bin/
+              cp -pP target/x86_64-fortanix-unknown-sgx/release/cipher-paratime.sgxs $out/bin/
 
               runHook postInstall
             '';
