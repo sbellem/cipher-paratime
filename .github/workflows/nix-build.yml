@@ -96,7 +96,7 @@ jobs:
       - name: sha256sum check
         run: |
           # f7ff2296f5182cb287a30cab7c41a8a2ab75e72847300b9131f1507e37826322
-          echo "953d2245b48a97d4c6f024d8e82be1b14189b47b7c06feb1328e5a5cfbf40c60 *result/bin/cipher-paratime" | sha256sum --strict --check
+          echo "953d2245b48a97d4c6f024d8e82be1b14189b47b7c06feb1328e5a5cfbf40c60 *result/bin/cipher-paratime.sgxs" | sha256sum --strict --check
 
       - run: shasum -a 512256 -b result/bin/cipher-paratime.sgxs
       - name: shasum 512256 check
