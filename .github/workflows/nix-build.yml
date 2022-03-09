@@ -40,6 +40,7 @@ jobs:
           name: initc3
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
+      - run: echo "number of cores: $(nproc)"
       - run: nix --version
       - run: nix build .#nosgx
       - run: sha256sum result/bin/cipher-paratime
@@ -89,6 +90,7 @@ jobs:
           name: initc3
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
+      - run: echo "number of cores: $(nproc)"
       - run: nix --version
       - run: nix build .#sgx
 
