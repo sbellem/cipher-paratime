@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
     flake-utils.url = "github:numtide/flake-utils";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -33,6 +37,7 @@
     self,
     nixpkgs,
     rust-overlay,
+    flake-compat,
     flake-utils,
     fortanix-sgx-tools,
     oasis-core-tools,
