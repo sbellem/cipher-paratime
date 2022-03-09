@@ -52,6 +52,13 @@ jobs:
           #       perhaps some dependencies are not pinned
           #echo "d4c77a86e0d1502313d70095f3badcd5a1499510f8131b0665dd2a93dbfd00b2 *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
           echo "b0c2e27d8b09e3d0337e65c3bac04f33b68afa16a09ccd3189cf039f222db7de *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact_cipher-paratime_${{ github.ref_name }}
+          path: result/bin/cipher-paratime
+
       - run: nix flake check
       - run: nix flake metadata
       - run: nix flake show
@@ -88,6 +95,13 @@ jobs:
           #       perhaps some dependencies are not pinned
           #echo "547c506aee7c7ee53e85ce0842e840010979288c8350a0b9dc1d510d8b431abf *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
           echo "fbd36bb70d0e381866a3aa0da5e52304c16dc022b86e44302b18e104aecc2743 *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact_cipher-paratime-sgx_${{ github.ref_name }}
+          path: result/bin/cipher-paratime-sgx
+
       - run: nix flake check
       - run: nix flake metadata
       - run: nix flake show
