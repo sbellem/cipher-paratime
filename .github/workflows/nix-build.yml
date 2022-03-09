@@ -104,7 +104,8 @@ jobs:
           # FIXME shasum of local build does not match the one on github ci
           #       perhaps some dependencies are not pinned
           #echo "547c506aee7c7ee53e85ce0842e840010979288c8350a0b9dc1d510d8b431abf *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
-          echo "fbd36bb70d0e381866a3aa0da5e52304c16dc022b86e44302b18e104aecc2743 *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
+          #echo "fbd36bb70d0e381866a3aa0da5e52304c16dc022b86e44302b18e104aecc2743 *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
+          echo "f3fd91db7e13a33af391e854f961c2a4f3db5609be78ab87cd884a26aa105c7c *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
 
       - run: nix build --rebuild .#sgx
 
