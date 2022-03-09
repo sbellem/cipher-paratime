@@ -42,16 +42,22 @@ jobs:
 
       - run: nix --version
       - run: nix build .#nosgx
-      - run: nix build --rebuild .#nosgx
-      - run: shasum -a 512256 -b result/bin/cipher-paratime
       - run: sha256sum result/bin/cipher-paratime
+      - run: shasum -a 512256 -b result/bin/cipher-paratime
+
+      - name: Shasum check
+        run: |
+          echo "0d97d71f78c0886515192c871a0411896a881d6cf220de9c1aca8d6253afe08b *result/bin/cipher-paratime" | sha256sum --strict --check
 
       - name: Shasum check
         run: |
           # FIXME shasum of local build does not match the one on github ci
           #       perhaps some dependencies are not pinned
           #echo "d4c77a86e0d1502313d70095f3badcd5a1499510f8131b0665dd2a93dbfd00b2 *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
-          echo "b0c2e27d8b09e3d0337e65c3bac04f33b68afa16a09ccd3189cf039f222db7de *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+          #echo "b0c2e27d8b09e3d0337e65c3bac04f33b68afa16a09ccd3189cf039f222db7de *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+          echo "4e7343d5d7da626f8da99ce26afe1c4302f14e45c9914746008bdd2a6811ccdd *result/bin/cipher-paratime" | shasum --algorithm 512256 --binary --strict --check
+
+      - run: nix build --rebuild .#nosgx
 
       - name: Upload binary
         uses: actions/upload-artifact@v3
