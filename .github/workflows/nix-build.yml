@@ -115,7 +115,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifact_cipher-paratime-sgx_${{ github.ref_name }}
-          path: result/bin/cipher-paratime-sgx
+          path: result/bin/cipher-paratime.sgxs
 
       - run: nix flake check
       - run: nix flake metadata
