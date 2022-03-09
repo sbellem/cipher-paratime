@@ -2,7 +2,7 @@
   description = "Oasis Network Cipher ParaTime";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/a7ecde854aee5c4c7cd6177f54a99d2c1ff28a31";
     flake-utils.url = "github:numtide/flake-utils";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
