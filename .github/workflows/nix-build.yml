@@ -45,11 +45,11 @@ jobs:
       - run: sha256sum result/bin/cipher-paratime
       - run: shasum -a 512256 -b result/bin/cipher-paratime
 
-      - name: Shasum check
+      - name: sha256sum check
         run: |
           echo "0d97d71f78c0886515192c871a0411896a881d6cf220de9c1aca8d6253afe08b *result/bin/cipher-paratime" | sha256sum --strict --check
 
-      - name: Shasum check
+      - name: shasum check
         run: |
           # FIXME shasum of local build does not match the one on github ci
           #       perhaps some dependencies are not pinned
@@ -91,16 +91,22 @@ jobs:
 
       - run: nix --version
       - run: nix build .#sgx
-      - run: nix build --rebuild .#sgx
-      - run: shasum -a 512256 -b result/bin/cipher-paratime.sgxs
-      - run: sha256sum result/bin/cipher-paratime.sgxs
 
-      - name: Shasum check
+      - run: sha256sum result/bin/cipher-paratime.sgxs
+      - name: sha256sum check
+        run: |
+          # f7ff2296f5182cb287a30cab7c41a8a2ab75e72847300b9131f1507e37826322
+          echo "953d2245b48a97d4c6f024d8e82be1b14189b47b7c06feb1328e5a5cfbf40c60 *result/bin/cipher-paratime" | sha256sum --strict --check
+
+      - run: shasum -a 512256 -b result/bin/cipher-paratime.sgxs
+      - name: shasum 512256 check
         run: |
           # FIXME shasum of local build does not match the one on github ci
           #       perhaps some dependencies are not pinned
           #echo "547c506aee7c7ee53e85ce0842e840010979288c8350a0b9dc1d510d8b431abf *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
           echo "fbd36bb70d0e381866a3aa0da5e52304c16dc022b86e44302b18e104aecc2743 *result/bin/cipher-paratime.sgxs" | shasum --algorithm 512256 --binary --strict --check
+
+      - run: nix build --rebuild .#sgx
 
       - name: Upload binary
         uses: actions/upload-artifact@v3
